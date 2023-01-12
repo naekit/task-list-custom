@@ -6,6 +6,13 @@ import TaskForm from "./TaskForm"
 const NewTask = (props) => {
 	const { isLoading, error, sendRequest: addTaskRequest } = useHttp()
 
+	const addTask = (taskText, task) => {
+		const generatedId = task.name // firebase-specific => "name" contains generated id
+		const createdTask = { id: generatedId, text: taskText }
+
+		props.onAddTask(createdTask)
+	}
+
 	const enterTaskHandler = async (taskText) => {
 		addTaskRequest(
 			{
@@ -16,7 +23,7 @@ const NewTask = (props) => {
 					"Content-Type": "application/json",
 				},
 			},
-			props.onAddTask
+			addTask.bind(null, taskText)
 		)
 	}
 

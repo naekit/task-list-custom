@@ -19,16 +19,7 @@ const useHttp = () => {
 			}
 
 			const data = await response.json()
-			if (reqConfig.method === "POST") {
-				const generatedId = data.name // firebase-specific => "name" contains generated id
-				const createdTask = {
-					id: generatedId,
-					text: reqConfig.body.text,
-				}
-				dataConfig(createdTask)
-			} else {
-				dataConfig(data)
-			}
+			dataConfig(data)
 		} catch (err) {
 			setError(err.message || "Something went wrong!")
 		}
